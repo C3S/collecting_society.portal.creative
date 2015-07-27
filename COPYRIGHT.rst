@@ -5,7 +5,8 @@ Core Application
 
     collecting_society.portal.creative - Web Portal plugin: Creative
 
-    Copyright (C) 2014-2015 Cultural Commons Collecting Society SCE mbH (C3S SCE) 
+    Copyright (C) 2014-2015 Cultural Commons Collecting Society SCE mit
+                            beschränkter Haftung (C3S SCE)
     Copyright (C) 2014-2015 Alexander Blum <alexander.blum@c3s.cc>
 
     This program is free software: you can redistribute it and/or modify

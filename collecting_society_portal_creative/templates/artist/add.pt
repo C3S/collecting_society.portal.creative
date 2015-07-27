@@ -1,0 +1,24 @@
+<!-- For copyright / license terms, see COPYRIGHT.rst (top level of repository)
+     Repository: https://github.com/C3S/collecting_society.portal.creative -->
+
+<tal:block metal:use-macro="backend">
+
+    <!-- content left -->
+    <tal:block metal:fill-slot="content-left"></tal:block>
+
+    <!-- content middle -->
+    <tal:block metal:fill-slot="content-middle">
+
+        <div>
+            <a class="btn btn-default btn-lg center-block" href="${request.resource_path(context, 'solo')}" role="button">Add Solo Artist</a>
+        </div>
+        <div>
+            <a class="btn btn-default btn-lg center-block" href="${request.resource_path(context, 'group')}" role="button">Add Group Artist</a>
+        </div>
+
+    </tal:block>
+
+    <!-- content right -->
+    <tal:block metal:fill-slot="content-right"></tal:block>
+
+</tal:block>

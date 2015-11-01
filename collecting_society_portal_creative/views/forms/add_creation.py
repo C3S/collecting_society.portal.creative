@@ -212,6 +212,15 @@ class AddCreation(FormController):
             return
         creation = creations[0]
 
+        Attachment = Tdb.get('ir.attachment')
+        attachment = Attachment(
+            type='data',
+            name=self.data['audiofile']['filename'],
+            resource=creation,
+            data=self.data['audiofile']['fp'].read()
+        )
+        attachment.save()
+
         log.info("creation add successful for %s: %s" % (email, creation))
         self.request.session.flash(
             _(u"Creation added: ")+creation.title+" ("+creation.code+")",

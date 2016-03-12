@@ -1,7 +1,7 @@
 <!-- For copyright / license terms, see COPYRIGHT.rst (top level of repository)
      Repository: https://github.com/C3S/collecting_society.portal.creative -->
 
-<tal:block metal:use-macro="backend">
+<tal:block metal:use-macro="backend" i18n:domain="collecting_society_portal_creative">
 
     <!-- content left -->
     <tal:block metal:fill-slot="content-left"></tal:block>
@@ -17,7 +17,7 @@
                         <h1 i18n:translate="">Solo Artists</h1>
                         <div class="cs-symbolnavbar">
                             <a href="${request.resource_path(context, 'add', 'solo')}">
-                                <span class="glyphicon glyphicon-plus"></span> <span>Add</span>
+                                <span class="glyphicon glyphicon-plus"></span> <span i18n:translate="">Add</span>
                             </a>
                         </div>
                     </td>
@@ -58,7 +58,7 @@
                         <h1 i18n:translate="">Group Artists</h1>
                         <div class="cs-symbolnavbar">
                             <a href="${request.resource_path(context, 'add', 'group')}">
-                                <span class="glyphicon glyphicon-plus"></span> <span>Add</span>
+                                <span class="glyphicon glyphicon-plus"></span> <span i18n:translate="">Add</span>
                             </a>
                         </div>
                     </td>

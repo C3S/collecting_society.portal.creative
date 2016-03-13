@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2016-03-12 15:33+0100\n"
+"POT-Creation-Date: 2016-03-12 16:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,14 +66,19 @@ msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_solo_artist.py:183
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:483
+#: ./collecting_society_portal_creative/templates/creation/list.pt:29
 msgid "Artist"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_solo_artist.py:185
+#: ./collecting_society_portal_creative/templates/artist/show.pt:46
+#: ./collecting_society_portal_creative/templates/artist/list.pt:27
+#: ./collecting_society_portal_creative/templates/artist/list.pt:68
 msgid "Name"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_solo_artist.py:188
+#: ./collecting_society_portal_creative/templates/artist/show.pt:51
 msgid "Description"
 msgstr ""
 
@@ -100,6 +105,7 @@ msgid "Number"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_solo_artist.py:213
+#: ./collecting_society_portal_creative/templates/artist/add.pt:16
 msgid "Add Solo Artist"
 msgstr ""
 
@@ -109,6 +115,7 @@ msgid "Submit"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_group_artist.py:48
+#: ./collecting_society_portal_creative/templates/artist/add.pt:22
 msgid "Add Group Artist"
 msgstr ""
 
@@ -126,26 +133,35 @@ msgid "- Select -"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:240
+#: ./collecting_society_portal_creative/templates/creation/show.pt:62
 msgid "Performance"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:241
+#: ./collecting_society_portal_creative/templates/creation/show.pt:65
 msgid "Composition"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:242
+#: ./collecting_society_portal_creative/templates/creation/show.pt:68
 msgid "Text"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:247
+#: ./collecting_society_portal_creative/templates/creation/show.pt:108
+#: ./collecting_society_portal_creative/templates/creation/show.pt:131
 msgid "Adaption"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:248
+#: ./collecting_society_portal_creative/templates/creation/show.pt:111
+#: ./collecting_society_portal_creative/templates/creation/show.pt:134
 msgid "Cover"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:249
+#: ./collecting_society_portal_creative/templates/creation/show.pt:114
+#: ./collecting_society_portal_creative/templates/creation/show.pt:137
 msgid "Remix"
 msgstr ""
 
@@ -162,10 +178,13 @@ msgid "Add metadata"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:434
+#: ./collecting_society_portal_creative/templates/creation/show.pt:41
+#: ./collecting_society_portal_creative/templates/creation/list.pt:28
 msgid "Title"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:437
+#: ./collecting_society_portal_creative/templates/creation/show.pt:46
 msgid "Featured Artist"
 msgstr ""
 
@@ -178,6 +197,8 @@ msgid "Add contributions"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:470
+#: ./collecting_society_portal_creative/templates/creation/show.pt:53
+#: ./collecting_society_portal_creative/templates/artist/show.pt:87
 msgid "Contributions"
 msgstr ""
 
@@ -186,6 +207,7 @@ msgid "Add licences"
 msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:477
+#: ./collecting_society_portal_creative/templates/creation/show.pt:80
 msgid "Licenses"
 msgstr ""
 
@@ -235,4 +257,45 @@ msgstr ""
 
 #: ./collecting_society_portal_creative/views/forms/add_creation.py:554
 msgid "Back to licences"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/creation/show.pt:36
+#: ./collecting_society_portal_creative/templates/creation/list.pt:31
+#: ./collecting_society_portal_creative/templates/artist/show.pt:41
+#: ./collecting_society_portal_creative/templates/artist/list.pt:29
+#: ./collecting_society_portal_creative/templates/artist/list.pt:70
+msgid "ID"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/creation/show.pt:98
+msgid "Origins"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/creation/show.pt:121
+msgid "Derivatives"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/creation/list.pt:18
+#: ./collecting_society_portal_creative/templates/artist/show.pt:82
+msgid "Creations"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/creation/list.pt:21
+#: ./collecting_society_portal_creative/templates/artist/list.pt:20
+#: ./collecting_society_portal_creative/templates/artist/list.pt:61
+msgid "Add"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/artist/show.pt:56
+#: ./collecting_society_portal_creative/templates/artist/list.pt:17
+msgid "Solo Artists"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/artist/show.pt:69
+#: ./collecting_society_portal_creative/templates/artist/list.pt:58
+msgid "Group Artists"
+msgstr ""
+
+#: ./collecting_society_portal_creative/templates/artist/show.pt:99
+msgid "Bank Account Number"
 msgstr ""

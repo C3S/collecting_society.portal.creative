@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2016-03-12 15:33+0100\n"
-"PO-Revision-Date: 2016-03-12 15:43+0100\n"
+"POT-Creation-Date: 2016-03-12 16:45+0100\n"
+"PO-Revision-Date: 2016-03-13 11:29+0100\n"
 "Last-Translator: Thomas Mielke <thomas.mielke@c3s.cc>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -19,68 +19,73 @@ msgstr ""
 
 #: collecting_society_portal_creative/views/creation.py:80
 msgid "Could not delete creation - id is missing"
-msgstr ""
+msgstr "Kann das Werk nicht löschen - ID fehlt"
 
 #: collecting_society_portal_creative/views/creation.py:88
 msgid "Could not delete creation - creation not found"
-msgstr ""
+msgstr "Kann das Werk nicht löschen - Werk nicht gefunden"
 
 #: collecting_society_portal_creative/views/creation.py:103
 msgid "Creation deleted: "
-msgstr ""
+msgstr "Werkgelöscht: "
 
 #: collecting_society_portal_creative/views/artist.py:99
 msgid "Could not delete artist - id is missing"
-msgstr ""
+msgstr "Kann den Künstler nicht löschen - ID fehlt"
 
 #: collecting_society_portal_creative/views/artist.py:107
 msgid "Could not delete artist - artist not found"
-msgstr ""
+msgstr "Kann den Künstler nicht löschen - Künstler nicht gefunden"
 
 #: collecting_society_portal_creative/views/artist.py:118
 msgid "Artist deleted: "
-msgstr ""
+msgstr "Künstler gelöscht: "
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:69
 msgid "Artist could not be added: "
-msgstr ""
+msgstr "Kann Künstler nicht hinzufügen: "
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:92
 msgid "Artist added: "
-msgstr ""
+msgstr "Künstler hinzugefügt: "
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:105
 msgid "Type missing"
-msgstr ""
+msgstr "Typ fehlt"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:107
 msgid "Number missing"
-msgstr ""
+msgstr "Zahlenwert fehlt"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:109
 msgid "BIC missing"
-msgstr ""
+msgstr "BIC fehlt"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:121
 msgid "Number is not a correct IBAN"
-msgstr ""
+msgstr "Zahlenwert ist keine korrekte IBAN"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:183
 #: collecting_society_portal_creative/views/forms/add_creation.py:483
+#: collecting_society_portal_creative/templates/creation/list.pt:29
 msgid "Artist"
 msgstr "Künstler"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:185
+#: collecting_society_portal_creative/templates/artist/show.pt:46
+#: collecting_society_portal_creative/templates/artist/list.pt:27
+#: collecting_society_portal_creative/templates/artist/list.pt:68
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:188
+#: collecting_society_portal_creative/templates/artist/show.pt:51
 msgid "Description"
 msgstr "Beschreibung"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:191
 msgid "Picture"
-msgstr ""
+msgstr "Bild"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:196
 msgid "Bank Account"
@@ -88,152 +93,210 @@ msgstr "Bankkonto"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:198
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:201
 #: collecting_society_portal_creative/views/forms/add_creation.py:459
 #: collecting_society_portal_creative/views/forms/add_creation.py:486
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:204
 msgid "Number"
-msgstr ""
+msgstr "Zahlenwert"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:213
+#: collecting_society_portal_creative/templates/artist/add.pt:16
 msgid "Add Solo Artist"
 msgstr "Solo-Künstler hinzufügen"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:224
 #: collecting_society_portal_creative/views/forms/add_group_artist.py:57
 msgid "Submit"
-msgstr ""
+msgstr "Absenden"
 
 #: collecting_society_portal_creative/views/forms/add_group_artist.py:48
+#: collecting_society_portal_creative/templates/artist/add.pt:22
 msgid "Add Group Artist"
-msgstr ""
+msgstr "Grupen-Künstler hinzufügen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:208
 msgid "Creation could not be added: "
-msgstr ""
+msgstr "Werk konnte nicht hinzugefügt werden: "
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:226
 msgid "Creation added: "
-msgstr ""
+msgstr "Werk hinzugefügt: "
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:239
 #: collecting_society_portal_creative/views/forms/add_creation.py:246
 msgid "- Select -"
-msgstr ""
+msgstr "- Auswählen -"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:240
+#: collecting_society_portal_creative/templates/creation/show.pt:62
 msgid "Performance"
-msgstr ""
+msgstr "Aufführung"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:241
+#: collecting_society_portal_creative/templates/creation/show.pt:65
 msgid "Composition"
 msgstr "Komposition"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:242
+#: collecting_society_portal_creative/templates/creation/show.pt:68
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:247
+#: collecting_society_portal_creative/templates/creation/show.pt:108
+#: collecting_society_portal_creative/templates/creation/show.pt:131
 msgid "Adaption"
-msgstr ""
+msgstr "Adaption"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:248
+#: collecting_society_portal_creative/templates/creation/show.pt:111
+#: collecting_society_portal_creative/templates/creation/show.pt:134
 msgid "Cover"
-msgstr ""
+msgstr "Cover"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:249
+#: collecting_society_portal_creative/templates/creation/show.pt:114
+#: collecting_society_portal_creative/templates/creation/show.pt:137
 msgid "Remix"
-msgstr ""
+msgstr "Remix"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:424
 msgid "Upload audiofile"
-msgstr ""
+msgstr "Audio-Datei hochladen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:426
 msgid "Upload Audiofile"
-msgstr ""
+msgstr "Audio-Datei hochladen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:431
 msgid "Add metadata"
-msgstr ""
+msgstr "Metadata hinzufügen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:434
+#: collecting_society_portal_creative/templates/creation/show.pt:41
+#: collecting_society_portal_creative/templates/creation/list.pt:28
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:437
+#: collecting_society_portal_creative/templates/creation/show.pt:46
 msgid "Featured Artist"
-msgstr ""
+msgstr "Gastauftritt"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:456
 msgid "Solo artist"
-msgstr ""
+msgstr "Solokünstler"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:468
 msgid "Add contributions"
-msgstr ""
+msgstr "Mitwirkung hinzufügen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:470
+#: collecting_society_portal_creative/templates/creation/show.pt:53
+#: collecting_society_portal_creative/templates/artist/show.pt:87
 msgid "Contributions"
-msgstr ""
+msgstr "Mitwirkungen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:475
 msgid "Add licences"
-msgstr ""
+msgstr "Lizenz hinzufügen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:477
+#: collecting_society_portal_creative/templates/creation/show.pt:80
 msgid "Licenses"
 msgstr "Lizenzen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:495
 msgid "Add relations to other creations"
-msgstr ""
+msgstr "Verknüpfung zu anderen Werken hinzufügen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:497
 msgid "Original creations"
-msgstr ""
+msgstr "Originalwerke"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:500
 msgid "Derivative creations"
-msgstr ""
+msgstr "Abgeleitete Werke"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:510
 msgid "Continue to metadata"
-msgstr ""
+msgstr "Weitermachen mit Metadaten"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:520
 msgid "Continue to contributions"
-msgstr ""
+msgstr "Weitermachen mit Mitwirkungen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:522
 msgid "Back to audiofile"
-msgstr ""
+msgstr "Zurück zur Audio-Datei"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:531
 msgid "Continue to licences"
-msgstr ""
+msgstr "Weiter zu den Lizenzen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:532
 msgid "Back to metadata"
-msgstr ""
+msgstr "Zurück zu Metadaten"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:542
 msgid "Continue to relations"
-msgstr ""
+msgstr "Weiter zu Verknüpfungen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:544
 msgid "Back to contributions"
-msgstr ""
+msgstr "Zurück zu Mitwirkungen"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:553
 msgid "Save creation"
-msgstr ""
+msgstr "Werk speichern"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:554
 msgid "Back to licences"
-msgstr ""
+msgstr "Zurück zu Lizenzen"
+
+#: collecting_society_portal_creative/templates/creation/show.pt:36
+#: collecting_society_portal_creative/templates/creation/list.pt:31
+#: collecting_society_portal_creative/templates/artist/show.pt:41
+#: collecting_society_portal_creative/templates/artist/list.pt:29
+#: collecting_society_portal_creative/templates/artist/list.pt:70
+msgid "ID"
+msgstr "ID"
+
+#: collecting_society_portal_creative/templates/creation/show.pt:98
+msgid "Origins"
+msgstr "Ursprünge"
+
+#: collecting_society_portal_creative/templates/creation/show.pt:121
+msgid "Derivatives"
+msgstr "Derivate"
+
+#: collecting_society_portal_creative/templates/creation/list.pt:18
+#: collecting_society_portal_creative/templates/artist/show.pt:82
+msgid "Creations"
+msgstr "Werke"
+
+#: collecting_society_portal_creative/templates/creation/list.pt:21
+#: collecting_society_portal_creative/templates/artist/list.pt:20
+#: collecting_society_portal_creative/templates/artist/list.pt:61
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: collecting_society_portal_creative/templates/artist/show.pt:56
+#: collecting_society_portal_creative/templates/artist/list.pt:17
+msgid "Solo Artists"
+msgstr "Solo-Künstler"
+
+#: collecting_society_portal_creative/templates/artist/show.pt:69
+#: collecting_society_portal_creative/templates/artist/list.pt:58
+msgid "Group Artists"
+msgstr "Gruppen-Künstler"
+
+#: collecting_society_portal_creative/templates/artist/show.pt:99
+msgid "Bank Account Number"
+msgstr "Bankkontonummer"

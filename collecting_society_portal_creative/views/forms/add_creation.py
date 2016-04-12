@@ -108,7 +108,7 @@ class AddCreation(FormController):
             self.add_licenses()
 
     def add_licenses(self):
-        self.form = add_licenses_form()
+        self.form = add_licenses_form(self.request)
         self.render(self.data)
 
         if self.submitted('add_contributions'):
@@ -250,12 +250,6 @@ creation_relation_options = (
 )
 
 
-@Tdb.transaction(readonly=True)
-def licenses_options():
-    licenses = License.search_all()
-    return [(license.id, license.name) for license in licenses]
-
-
 # --- Fields ------------------------------------------------------------------
 
 @colander.deferred
@@ -289,9 +283,10 @@ def creations_select_widget(node, kw):
 
 @colander.deferred
 def licenses_select_widget(node, kw):
+    licenses = License.search_all()
+    licenses_options = [(license.id, license.name) for license in licenses]
     widget = deform.widget.Select2Widget(
-        values=licenses_options(),
-        multiple=True
+        values=licenses_options, multiple=True
     )
     return widget
 
@@ -540,9 +535,9 @@ def add_contributions_form(request):
     )
 
 
-def add_licenses_form():
+def add_licenses_form(request):
     return deform.Form(
-        schema=AddLicencesSchema(),
+        schema=AddLicencesSchema().bind(request=request),
         buttons=[
             deform.Button(
                 'add_creation_relations', _(u"Continue to relations")

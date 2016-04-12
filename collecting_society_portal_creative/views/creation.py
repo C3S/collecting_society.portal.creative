@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 @view_defaults(
     context='..resources.CreationResource',
-    permission='authenticated')
+    permission='read')
 class CreationViews(ViewBase):
 
     @view_config(

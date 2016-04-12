@@ -29,7 +29,7 @@ log = logging.getLogger(__name__)
 
 @view_defaults(
     context='..resources.ArtistResource',
-    permission='authenticated')
+    permission='read')
 class ArtistViews(ViewBase):
 
     @view_config(

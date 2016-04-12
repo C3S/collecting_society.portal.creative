@@ -287,6 +287,15 @@ def creations_select_widget(node, kw):
     return widget
 
 
+@colander.deferred
+def licenses_select_widget(node, kw):
+    widget = deform.widget.Select2Widget(
+        values=licenses_options(),
+        multiple=True
+    )
+    return widget
+
+
 class AudiofileField(colander.SchemaNode):
     oid = "audiofile"
     schema_type = deform.FileData
@@ -320,10 +329,7 @@ class ContributionTypeField(colander.SchemaNode):
 class LicensesField(colander.SchemaNode):
     oid = "licenses"
     schema_type = colander.Set
-    widget = deform.widget.Select2Widget(
-        values=licenses_options(),
-        multiple=True
-    )
+    widget = licenses_select_widget
 
 
 class CreationField(colander.SchemaNode):

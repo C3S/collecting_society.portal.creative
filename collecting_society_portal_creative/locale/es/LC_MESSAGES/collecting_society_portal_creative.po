@@ -1,0 +1,322 @@
+#
+# German translations for PACKAGE package
+# This file is distributed under the same license as the PACKAGE package.
+# thomas <thomas.mielke@c3s.cc>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: Adore\n"
+"POT-Creation-Date: 2016-03-12 16:45+0100\n"
+"PO-Revision-Date: 2016-04-17 11:30+0100\n"
+"Last-Translator: Thomas Mielke <thomas.mielke@c3s.cc>\n"
+"Language-Team: Jordi\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Lingua 4.8.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: collecting_society_portal_creative/views/creation.py:80
+msgid "Could not delete creation - id is missing"
+msgstr "La obra no se puede eliminar - falta la ID"
+
+#: collecting_society_portal_creative/views/creation.py:88
+msgid "Could not delete creation - creation not found"
+msgstr "La obra no se puede eliminar - obra no encontrada"
+
+#: collecting_society_portal_creative/views/creation.py:103
+msgid "Creation deleted: "
+msgstr "Obra eliminada"
+
+#: collecting_society_portal_creative/views/artist.py:99
+msgid "Could not delete artist - id is missing"
+msgstr "El artista no se puede eliminar - falta la ID"
+
+#: collecting_society_portal_creative/views/artist.py:107
+msgid "Could not delete artist - artist not found"
+msgstr "El artista no se puede eliminar - artista no encontrado"
+
+#: collecting_society_portal_creative/views/artist.py:118
+msgid "Artist deleted: "
+msgstr "Artista eliminado"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:69
+msgid "Artist could not be added: "
+msgstr "El artista no pudo ser añadido"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:92
+msgid "Artist added: "
+msgstr "Artista añadido"
+
+# What do you mean by Type? In wich context?
+# >>>TM: It's the type of bank account to be selected (for example IBAN) when adding a solo artist.
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:105
+msgid "Type missing"
+msgstr "Falta un tipo"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:107
+msgid "Number missing"
+msgstr "Falta el número"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:109
+msgid "BIC missing"
+msgstr "Falta el BIC"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:121
+msgid "Number is not a correct IBAN"
+msgstr "El número no es un IBAN correcto"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:183
+#: collecting_society_portal_creative/views/forms/add_creation.py:483
+#: collecting_society_portal_creative/templates/creation/list.pt:29
+msgid "Artist"
+msgstr "Artista"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:185
+#: collecting_society_portal_creative/templates/artist/show.pt:46
+#: collecting_society_portal_creative/templates/artist/list.pt:27
+#: collecting_society_portal_creative/templates/artist/list.pt:68
+msgid "Name"
+msgstr "Nombre"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:188
+#: collecting_society_portal_creative/templates/artist/show.pt:51
+msgid "Description"
+msgstr "Descripción"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:191
+msgid "Picture"
+msgstr "Imagen"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:196
+msgid "Bank Account"
+msgstr "Cuenta bancaria"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:198
+msgid "BIC"
+msgstr "BIC"
+
+# The same here: context?
+# >>>TM: It's the type of bank account to be selected (for example IBAN) when adding a solo artist.
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:201
+#: collecting_society_portal_creative/views/forms/add_creation.py:459
+#: collecting_society_portal_creative/views/forms/add_creation.py:486
+msgid "Type"
+msgstr "Tipo"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:204
+msgid "Number"
+msgstr "Número"
+
+# What exactly do you mean by solo? Somebody like bob dylan singing alone? Or is that referred to some particulary feature from Adore?
+# >>>TM: As an opposite to band.
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:213
+#: collecting_society_portal_creative/templates/artist/add.pt:16
+msgid "Add Solo Artist"
+msgstr "Añadir artista"
+
+#: collecting_society_portal_creative/views/forms/add_solo_artist.py:224
+#: collecting_society_portal_creative/views/forms/add_group_artist.py:57
+msgid "Submit"
+msgstr "Enviar"
+
+# You mean like a band? Or are you referring to a collection of artists?
+# >>>TM: A band.
+#: collecting_society_portal_creative/views/forms/add_group_artist.py:48
+#: collecting_society_portal_creative/templates/artist/add.pt:22
+msgid "Add Group Artist"
+msgstr "Añadir banda"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:208
+msgid "Creation could not be added: "
+msgstr "La obra no pudo ser añadida"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:226
+msgid "Creation added: "
+msgstr "Obra añadida"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:239
+#: collecting_society_portal_creative/views/forms/add_creation.py:246
+msgid "- Select -"
+msgstr "- Seleccionar -"
+
+# In wich context do you use the word Performance?
+# >>>TM: In the context of a band playing on a stage, for example.
+#: collecting_society_portal_creative/views/forms/add_creation.py:240
+#: collecting_society_portal_creative/templates/creation/show.pt:62
+msgid "Performance"
+msgstr "Actuación"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:241
+#: collecting_society_portal_creative/templates/creation/show.pt:65
+msgid "Composition"
+msgstr "Composición"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:242
+#: collecting_society_portal_creative/templates/creation/show.pt:68
+msgid "Text"
+msgstr "Texto"
+
+# You mean Adaption like an Adaptation or like a modification?
+# >>>TM: Yes, but in German a composer wouldn't call it just modification, it's when you play a song in another style, i.e. a classical piece as a metal song.
+#: collecting_society_portal_creative/views/forms/add_creation.py:247
+#: collecting_society_portal_creative/templates/creation/show.pt:108
+#: collecting_society_portal_creative/templates/creation/show.pt:131
+msgid "Adaption"
+msgstr "Modificación"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:248
+#: collecting_society_portal_creative/templates/creation/show.pt:111
+#: collecting_society_portal_creative/templates/creation/show.pt:134
+msgid "Cover"
+msgstr "Versión"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:249
+#: collecting_society_portal_creative/templates/creation/show.pt:114
+#: collecting_society_portal_creative/templates/creation/show.pt:137
+msgid "Remix"
+msgstr "Remezcla"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:424
+msgid "Upload audiofile"
+msgstr "Cargar archivo de audio"
+
+# Why is this one repeated?
+# >>>TM: It's because the different casing of audiofile.
+#: collecting_society_portal_creative/views/forms/add_creation.py:426
+msgid "Upload Audiofile"
+msgstr "Cargar archivo de audio"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:431
+msgid "Add metadata"
+msgstr "Añadir metadatos"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:434
+#: collecting_society_portal_creative/templates/creation/show.pt:41
+#: collecting_society_portal_creative/templates/creation/list.pt:28
+msgid "Title"
+msgstr "Título"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:437
+#: collecting_society_portal_creative/templates/creation/show.pt:46
+msgid "Featured Artist"
+msgstr "Artista destacado"
+
+# Again: what does mean Solo in context?
+# >>>TM: opposite to band
+#: collecting_society_portal_creative/views/forms/add_creation.py:456
+msgid "Solo artist"
+msgstr "Artista"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:468
+msgid "Add contributions"
+msgstr "Añadir contribuciones"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:470
+#: collecting_society_portal_creative/templates/creation/show.pt:53
+#: collecting_society_portal_creative/templates/artist/show.pt:87
+msgid "Contributions"
+msgstr "Contribuciones"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:475
+msgid "Add licences"
+msgstr "Añadir licencias"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:477
+#: collecting_society_portal_creative/templates/creation/show.pt:80
+msgid "Licenses"
+msgstr "Licencias"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:495
+msgid "Add relations to other creations"
+msgstr "Añadir relaciones con otras obras"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:497
+msgid "Original creations"
+msgstr "Obras originales"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:500
+msgid "Derivative creations"
+msgstr "Obras derivadas"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:510
+msgid "Continue to metadata"
+msgstr "Continuar con los metadatos"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:520
+msgid "Continue to contributions"
+msgstr "Continuar con las contribuciones"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:522
+msgid "Back to audiofile"
+msgstr "Volver al archivo de audio"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:531
+msgid "Continue to licences"
+msgstr "Continuar con las licencias"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:532
+msgid "Back to metadata"
+msgstr "Volver a los metadatos"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:542
+msgid "Continue to relations"
+msgstr "Continuar con las relaciones"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:544
+msgid "Back to contributions"
+msgstr "Volver a las contribuciones"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:553
+msgid "Save creation"
+msgstr "Guardar obra"
+
+#: collecting_society_portal_creative/views/forms/add_creation.py:554
+msgid "Back to licences"
+msgstr "Volver a las licencias"
+
+#: collecting_society_portal_creative/templates/creation/show.pt:36
+#: collecting_society_portal_creative/templates/creation/list.pt:31
+#: collecting_society_portal_creative/templates/artist/show.pt:41
+#: collecting_society_portal_creative/templates/artist/list.pt:29
+#: collecting_society_portal_creative/templates/artist/list.pt:70
+msgid "ID"
+msgstr "ID"
+
+#: collecting_society_portal_creative/templates/creation/show.pt:98
+msgid "Origins"
+msgstr "Orígenes"
+
+#: collecting_society_portal_creative/templates/creation/show.pt:121
+msgid "Derivatives"
+msgstr "Derivaciones"
+
+#: collecting_society_portal_creative/templates/creation/list.pt:18
+#: collecting_society_portal_creative/templates/artist/show.pt:82
+msgid "Creations"
+msgstr "Obras"
+
+#: collecting_society_portal_creative/templates/creation/list.pt:21
+#: collecting_society_portal_creative/templates/artist/list.pt:20
+#: collecting_society_portal_creative/templates/artist/list.pt:61
+msgid "Add"
+msgstr "Añadir"
+
+# Solo? Context?
+# >>>TM: opposite to band
+#: collecting_society_portal_creative/templates/artist/show.pt:56
+#: collecting_society_portal_creative/templates/artist/list.pt:17
+msgid "Solo Artists"
+msgstr "Artistas"
+
+# Group? Context?
+# >>>TM: opposite to solo artist
+#: collecting_society_portal_creative/templates/artist/show.pt:69
+#: collecting_society_portal_creative/templates/artist/list.pt:58
+msgid "Group Artists"
+msgstr "Bandas"
+
+#: collecting_society_portal_creative/templates/artist/show.pt:99
+msgid "Bank Account Number"
+msgstr "Número de cuenta bancaria"

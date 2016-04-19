@@ -4,12 +4,12 @@
 # thomas <thomas.mielke@c3s.cc>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: Adore\n"
+"Project-Id-Version: PACKAGE 1.0\n"
 "POT-Creation-Date: 2016-03-12 16:45+0100\n"
-"PO-Revision-Date: 2016-04-17 11:30+0100\n"
+"PO-Revision-Date: 2016-04-17 18:07+0100\n"
 "Last-Translator: Thomas Mielke <thomas.mielke@c3s.cc>\n"
-"Language-Team: Jordi\n"
-"Language: es\n"
+"Language-Team: German\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -49,11 +49,9 @@ msgstr "El artista no pudo ser añadido"
 msgid "Artist added: "
 msgstr "Artista añadido"
 
-# What do you mean by Type? In wich context?
-# >>>TM: It's the type of bank account to be selected (for example IBAN) when adding a solo artist.
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:105
 msgid "Type missing"
-msgstr "Falta un tipo"
+msgstr "Falta el tipo de cuenta bancaria"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:107
 msgid "Number missing"
@@ -97,20 +95,16 @@ msgstr "Cuenta bancaria"
 msgid "BIC"
 msgstr "BIC"
 
-# The same here: context?
-# >>>TM: It's the type of bank account to be selected (for example IBAN) when adding a solo artist.
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:201
 #: collecting_society_portal_creative/views/forms/add_creation.py:459
 #: collecting_society_portal_creative/views/forms/add_creation.py:486
 msgid "Type"
-msgstr "Tipo"
+msgstr "Tipo de cuenta bancaria"
 
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:204
 msgid "Number"
 msgstr "Número"
 
-# What exactly do you mean by solo? Somebody like bob dylan singing alone? Or is that referred to some particulary feature from Adore?
-# >>>TM: As an opposite to band.
 #: collecting_society_portal_creative/views/forms/add_solo_artist.py:213
 #: collecting_society_portal_creative/templates/artist/add.pt:16
 msgid "Add Solo Artist"
@@ -121,8 +115,6 @@ msgstr "Añadir artista"
 msgid "Submit"
 msgstr "Enviar"
 
-# You mean like a band? Or are you referring to a collection of artists?
-# >>>TM: A band.
 #: collecting_society_portal_creative/views/forms/add_group_artist.py:48
 #: collecting_society_portal_creative/templates/artist/add.pt:22
 msgid "Add Group Artist"
@@ -141,8 +133,6 @@ msgstr "Obra añadida"
 msgid "- Select -"
 msgstr "- Seleccionar -"
 
-# In wich context do you use the word Performance?
-# >>>TM: In the context of a band playing on a stage, for example.
 #: collecting_society_portal_creative/views/forms/add_creation.py:240
 #: collecting_society_portal_creative/templates/creation/show.pt:62
 msgid "Performance"
@@ -158,13 +148,11 @@ msgstr "Composición"
 msgid "Text"
 msgstr "Texto"
 
-# You mean Adaption like an Adaptation or like a modification?
-# >>>TM: Yes, but in German a composer wouldn't call it just modification, it's when you play a song in another style, i.e. a classical piece as a metal song.
 #: collecting_society_portal_creative/views/forms/add_creation.py:247
 #: collecting_society_portal_creative/templates/creation/show.pt:108
 #: collecting_society_portal_creative/templates/creation/show.pt:131
 msgid "Adaption"
-msgstr "Modificación"
+msgstr "Versión adaptada"
 
 #: collecting_society_portal_creative/views/forms/add_creation.py:248
 #: collecting_society_portal_creative/templates/creation/show.pt:111
@@ -182,8 +170,6 @@ msgstr "Remezcla"
 msgid "Upload audiofile"
 msgstr "Cargar archivo de audio"
 
-# Why is this one repeated?
-# >>>TM: It's because the different casing of audiofile.
 #: collecting_society_portal_creative/views/forms/add_creation.py:426
 msgid "Upload Audiofile"
 msgstr "Cargar archivo de audio"
@@ -203,8 +189,6 @@ msgstr "Título"
 msgid "Featured Artist"
 msgstr "Artista destacado"
 
-# Again: what does mean Solo in context?
-# >>>TM: opposite to band
 #: collecting_society_portal_creative/views/forms/add_creation.py:456
 msgid "Solo artist"
 msgstr "Artista"
@@ -303,15 +287,11 @@ msgstr "Obras"
 msgid "Add"
 msgstr "Añadir"
 
-# Solo? Context?
-# >>>TM: opposite to band
 #: collecting_society_portal_creative/templates/artist/show.pt:56
 #: collecting_society_portal_creative/templates/artist/list.pt:17
 msgid "Solo Artists"
 msgstr "Artistas"
 
-# Group? Context?
-# >>>TM: opposite to solo artist
 #: collecting_society_portal_creative/templates/artist/show.pt:69
 #: collecting_society_portal_creative/templates/artist/list.pt:58
 msgid "Group Artists"

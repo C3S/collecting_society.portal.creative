@@ -220,6 +220,7 @@ class AddCreation(FormController):
             data=self.data['audiofile']['fp'].read()
         )
         attachment.save()
+        self.data['audiofile']['fp'].delete()
 
         log.info("creation add successful for %s: %s" % (email, creation))
         self.request.session.flash(

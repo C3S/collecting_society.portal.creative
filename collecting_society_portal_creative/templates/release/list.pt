@@ -27,7 +27,7 @@
                     <th class="text-right" i18n:translate="">ID</th>
                 </tr>
 
-                <tr tal:repeat="artist artists">
+                <tr tal:repeat="release releases">
                     <td>
                         <a href="${request.resource_path(context, 'show', artist.id)}">${artist.name}</a>
                     </td>

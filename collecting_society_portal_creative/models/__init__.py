@@ -3,4 +3,5 @@
 
 from .artist import Artist
 from .creation import Creation
+from .content import Content
 from .license import License

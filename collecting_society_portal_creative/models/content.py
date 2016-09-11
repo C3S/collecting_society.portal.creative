@@ -68,6 +68,42 @@ class Content(Tdb):
 
     @classmethod
     @Tdb.transaction(readonly=True)
+    def search_by_uuid(cls, uuid):
+        """
+        Searches a content by uuid.
+
+        Args:
+            uuid (str): Uuid of the content.
+
+        Returns:
+            obj (content): Content.
+            None: If no match is found.
+        """
+        if uuid is None:
+            return None
+        result = cls.get().search([('uuid', '=', uuid)])
+        return result[0] if result else None
+
+    @classmethod
+    @Tdb.transaction(readonly=True)
+    def search_by_archive(cls, archive):
+        """
+        Searches a content by archive.
+
+        Args:
+            archive (str): Name of the archive device.
+
+        Returns:
+            obj (content): Content.
+            None: If no match is found.
+        """
+        if archive is None:
+            return None
+        result = cls.get().search([('archive', '=', archive)])
+        return result[0] if result else None
+
+    @classmethod
+    @Tdb.transaction(readonly=True)
     def search_by_user(cls, user_id):
         """
         Searches a content by user id.
@@ -161,23 +197,24 @@ class Content(Tdb):
 
     @classmethod
     @Tdb.transaction(readonly=True)
-    def search_orphans(cls, web_user_id, category):
+    def search_orphans(cls, user_id, category):
         """
         Searches orphan content in category of web user.
 
         Args:
             request (pyramid.request.Request): Current request.
+            user_id (int): Res user id.
             category (str): Category of content.
 
         Returns:
             list (content): List of content.
             None: If no match is found.
         """
-        if web_user_id is None:
+        if user_id is None:
             return None
         result = cls.get().search(
             [
-                ('user', '=', web_user_id),
+                ('user', '=', user_id),
                 ('category', '=', category),
                 ('creation', '=', None)
             ]
@@ -198,8 +235,8 @@ class Content(Tdb):
             list (content): List of content.
             None: If no match is found.
         """
-        web_user = WebUser.current_web_user(request)
-        return cls.search_orphans(web_user.id, category)
+        user = WebUser.current_web_user(request).user
+        return cls.search_orphans(user.id, category)
 
     @classmethod
     @Tdb.transaction(readonly=False)
@@ -240,6 +277,10 @@ class Content(Tdb):
         for values in vlist:
             if 'name' not in values:
                 raise KeyError('name is missing')
+            if 'uuid' not in values:
+                raise KeyError('uuid is missing')
+            if 'user' not in values:
+                raise KeyError('user is missing')
             if 'category' not in values:
                 raise KeyError('category is missing')
         log.debug('create content:\n{}'.format(vlist))

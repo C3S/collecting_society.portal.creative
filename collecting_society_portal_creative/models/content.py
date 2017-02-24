@@ -275,6 +275,8 @@ class Content(Tdb):
             KeyError: If required field is missing.
         """
         for values in vlist:
+            if 'processing_state' not in values:
+                raise KeyError('processing_state is missing')
             if 'name' not in values:
                 raise KeyError('name is missing')
             if 'uuid' not in values:

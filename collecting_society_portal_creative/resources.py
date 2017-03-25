@@ -12,22 +12,6 @@ class ArtistResource(ResourceBase):
     __acl__ = []
 
 
-class SoloArtistResource(ResourceBase):
-    __name__ = "solo"
-    __parent__ = ArtistResource
-    __children__ = {}
-    __registry__ = {}
-    __acl__ = []
-
-
-class GroupArtistResource(ResourceBase):
-    __name__ = "group"
-    __parent__ = ArtistResource
-    __children__ = {}
-    __registry__ = {}
-    __acl__ = []
-
-
 class ReleaseResource(ResourceBase):
     __name__ = "releases"
     __parent__ = None

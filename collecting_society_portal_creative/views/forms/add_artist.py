@@ -3,7 +3,11 @@
 
 import colander
 import deform
+from pkg_resources import resource_filename
 import logging
+
+from pyramid.threadlocal import get_current_request
+from pyramid.i18n import get_localizer
 
 from collecting_society_portal.services import iban
 from collecting_society_portal.models import (
@@ -24,14 +28,14 @@ log = logging.getLogger(__name__)
 
 # --- Controller --------------------------------------------------------------
 
-class AddSoloArtist(FormController):
+class AddArtist(FormController):
     """
     form controller for creation of artists
     """
 
     def controller(self):
 
-        self.form = add_solo_artist_form(self.request)
+        self.form = add_artist_form(self.request)
 
         if self.submitted() and self.validate():
             self.create_artist()
@@ -179,8 +183,7 @@ class BicField(colander.SchemaNode):
 
 # --- Schemas -----------------------------------------------------------------
 
-class SoloArtistSchema(colander.MappingSchema):
-    title = _(u"Artist")
+class MetadataSchema(colander.Schema):
     name = NameField(
         title=_(u"Name")
     )
@@ -192,8 +195,15 @@ class SoloArtistSchema(colander.MappingSchema):
     )
 
 
-class BankAccountNumberSchema(colander.MappingSchema):
-    title = _(u"Bank Account")
+class MembersSchema(colander.Schema):
+    pass
+
+
+class AccessSchema(colander.Schema):
+    pass
+
+
+class AccountSchema(colander.Schema):
     bic = BicField(
         title=_(u"BIC")
     )
@@ -209,17 +219,40 @@ class BankAccountNumberSchema(colander.MappingSchema):
     )
 
 
-class AddSoloArtistSchema(colander.MappingSchema):
-    title = _(u"Add Solo Artist")
-    artist = SoloArtistSchema()
-    bank_account = BankAccountNumberSchema()
+class AddArtistSchema(colander.Schema):
+    title = _(u"Add Artist")
+    metadata = MetadataSchema(
+        title=_(u"Metadata")
+    )
+    members = MembersSchema(
+        title=_(u"Members")
+    )
+    access = AccessSchema(
+        title=_(u"Access")
+    )
+    account = AccountSchema(
+        title=_(u"Account")
+    )
 
 
 # --- Forms -------------------------------------------------------------------
 
-def add_solo_artist_form(request):
+# custom template
+def translator(term):
+    return get_localizer(get_current_request()).translate(term)
+
+
+zpt_renderer_tabs = deform.ZPTRendererFactory([
+    resource_filename('collecting_society_portal', 'templates/deform/tabs'),
+    resource_filename('collecting_society_portal', 'templates/deform'),
+    resource_filename('deform', 'templates')
+], translator=translator)
+
+
+def add_artist_form(request):
     return deform.Form(
-        schema=AddSoloArtistSchema().bind(request=request),
+        renderer=zpt_renderer_tabs,
+        schema=AddArtistSchema().bind(request=request),
         buttons=[
             deform.Button('submit', _(u"Submit"))
         ]

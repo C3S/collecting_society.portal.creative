@@ -216,7 +216,8 @@ class Content(Tdb):
             [
                 ('user', '=', user_id),
                 ('category', '=', category),
-                ('creation', '=', None)
+                ('creation', '=', None),
+                ('processing_state', '!=', 'rejected')
             ]
         )
         return result or None

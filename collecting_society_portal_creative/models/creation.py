@@ -47,8 +47,10 @@ class Creation(Tdb):
         return cls.get().search([
             [
                 'OR',
+                ('artist.party', '=', party_id),
                 ('contributions.artist.party', '=', party_id),
-                ('contributions.artist.solo_artists.party', '=', party_id)
+                ('contributions.artist.solo_artists.party', '=', party_id),
+                ('contributions.artist.group_artists.party', '=', party_id)
             ],
             ('active', 'in', (True, active))
         ])

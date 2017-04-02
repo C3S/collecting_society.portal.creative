@@ -2,6 +2,7 @@
 # Repository: https://github.com/C3S/collecting_society.portal.creative
 
 from .artist import Artist
+from .release import Release
 from .creation import Creation
 from .content import Content
 from .license import License

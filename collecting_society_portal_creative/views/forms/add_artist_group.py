@@ -3,7 +3,11 @@
 
 import colander
 import deform
+from pkg_resources import resource_filename
 import logging
+
+from pyramid.threadlocal import get_current_request
+from pyramid.i18n import get_localizer
 
 from collecting_society_portal.services import iban
 from collecting_society_portal.models import (
@@ -24,14 +28,14 @@ log = logging.getLogger(__name__)
 
 # --- Controller --------------------------------------------------------------
 
-class AddSoloArtist(FormController):
+class AddArtistGroup(FormController):
     """
     form controller for creation of artists
     """
 
     def controller(self):
 
-        self.form = add_solo_artist_form(self.request)
+        self.form = add_artist_form(self.request)
 
         if self.submitted() and self.validate():
             self.create_artist()
@@ -49,17 +53,34 @@ class AddSoloArtist(FormController):
         email = self.request.unauthenticated_userid
         party = WebUser.current_party(self.request)
 
+        log.debug(
+            (
+                "self.appstruct: %s\n"
+            ) % (
+                self.appstruct
+            )
+        )
+
         _artist = {
             'party': party,
-            'group': False,
-            'name': self.appstruct['artist']['name'],
-            'description': self.appstruct['artist']['description'] or ''
+            'name': self.appstruct['metadata']['name'],
+            'description': self.appstruct['metadata']['description'] or ''
         }
-        if self.appstruct['artist']['picture']:
-            picture_data = self.appstruct['artist']['picture']['fp'].read()
-            mimetype = self.appstruct['artist']['picture']['mimetype']
+        if self.appstruct['metadata']['picture']:
+            picture_data = self.appstruct['metadata']['picture']['fp'].read()
+            mimetype = self.appstruct['metadata']['picture']['mimetype']
             _artist['picture_data'] = picture_data
             _artist['picture_data_mime_type'] = mimetype
+
+        _artist['solo_artists'] = [(
+            'add', self.appstruct['members']['members']
+        )]
+
+        # _artist['access_parties'] = []
+        # for access_party in self.appstruct['access']['access']:
+        #     _artist['access_parties'].append(
+        #         'party.party,%s' % (access_party)
+        #     )
 
         artists = Artist.create([_artist])
 
@@ -73,13 +94,13 @@ class AddSoloArtist(FormController):
             return
         artist = artists[0]
 
-        if self.appstruct['bank_account']['type']:
+        if self.appstruct['account']['type']:
             _bank_account_number = {
-                'bic': self.appstruct['bank_account']['bic'],
-                'type': self.appstruct['bank_account']['type'],
+                'bic': self.appstruct['account']['bic'],
+                'type': self.appstruct['account']['type'],
             }
-            if self.appstruct['bank_account']['type'] == 'iban':
-                number = self.appstruct['bank_account']['number']
+            if self.appstruct['account']['type'] == 'iban':
+                number = self.appstruct['account']['number']
                 _bank_account_number['number'] = number
             bank_account_number = BankAccountNumber.create(
                 artist.party, [_bank_account_number]
@@ -138,6 +159,24 @@ type_options = (
 
 # --- Fields ------------------------------------------------------------------
 
+@colander.deferred
+def web_user_select_widget(node, kw):
+    web_users = WebUser.search_all()
+    web_user_options = [
+        (web_user.id, web_user.party.name) for web_user in web_users
+    ]
+    widget = deform.widget.Select2Widget(values=web_user_options)
+    return widget
+
+
+@colander.deferred
+def solo_artists_select_widget(node, kw):
+    solo_artists = Artist.search_all_solo_artists()
+    solo_artist_options = [(artist.id, artist.name) for artist in solo_artists]
+    widget = deform.widget.Select2Widget(values=solo_artist_options)
+    return widget
+
+
 class NameField(colander.SchemaNode):
     oid = "name"
     schema_type = colander.String
@@ -154,6 +193,13 @@ class PictureField(colander.SchemaNode):
     oid = "picture"
     schema_type = deform.FileData
     widget = deferred_file_upload_widget
+    missing = ""
+
+
+class WebUserField(colander.SchemaNode):
+    oid = "webuser"
+    schema_type = colander.String
+    widget = web_user_select_widget
     missing = ""
 
 
@@ -177,10 +223,15 @@ class BicField(colander.SchemaNode):
     missing = ""
 
 
+class MembersField(colander.SchemaNode):
+    oid = "members"
+    schema_type = colander.String
+    widget = solo_artists_select_widget
+
+
 # --- Schemas -----------------------------------------------------------------
 
-class SoloArtistSchema(colander.MappingSchema):
-    title = _(u"Artist")
+class MetadataSchema(colander.Schema):
     name = NameField(
         title=_(u"Name")
     )
@@ -192,8 +243,31 @@ class SoloArtistSchema(colander.MappingSchema):
     )
 
 
-class BankAccountNumberSchema(colander.MappingSchema):
-    title = _(u"Bank Account")
+class MembersSequence(colander.SequenceSchema):
+    member = MembersField(
+        title=""
+    )
+
+
+class MembersSchema(colander.Schema):
+    members = MembersSequence(
+        title=_(u"Members")
+    )
+
+
+class AccessSequence(colander.SequenceSchema):
+    webuser = WebUserField(
+        title=""
+    )
+
+
+class AccessSchema(colander.Schema):
+    access = AccessSequence(
+        title=_(u"Access")
+    )
+
+
+class AccountSchema(colander.Schema):
     bic = BicField(
         title=_(u"BIC")
     )
@@ -209,17 +283,40 @@ class BankAccountNumberSchema(colander.MappingSchema):
     )
 
 
-class AddSoloArtistSchema(colander.MappingSchema):
-    title = _(u"Add Solo Artist")
-    artist = SoloArtistSchema()
-    bank_account = BankAccountNumberSchema()
+class AddArtistSchema(colander.Schema):
+    title = _(u"Add Group Artist")
+    metadata = MetadataSchema(
+        title=_(u"Metadata")
+    )
+    members = MembersSchema(
+        title=_(u"Members")
+    )
+    # access = AccessSchema(
+    #     title=_(u"Access")
+    # )
+    account = AccountSchema(
+        title=_(u"Account")
+    )
 
 
 # --- Forms -------------------------------------------------------------------
 
-def add_solo_artist_form(request):
+# custom template
+def translator(term):
+    return get_localizer(get_current_request()).translate(term)
+
+
+zpt_renderer_tabs = deform.ZPTRendererFactory([
+    resource_filename('collecting_society_portal', 'templates/deform/tabs'),
+    resource_filename('collecting_society_portal', 'templates/deform'),
+    resource_filename('deform', 'templates')
+], translator=translator)
+
+
+def add_artist_form(request):
     return deform.Form(
-        schema=AddSoloArtistSchema().bind(request=request),
+        renderer=zpt_renderer_tabs,
+        schema=AddArtistSchema().bind(request=request),
         buttons=[
             deform.Button('submit', _(u"Submit"))
         ]

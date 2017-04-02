@@ -28,7 +28,7 @@ log = logging.getLogger(__name__)
 
 # --- Controller --------------------------------------------------------------
 
-class AddArtist(FormController):
+class AddArtistSolo(FormController):
     """
     form controller for creation of artists
     """
@@ -53,17 +53,30 @@ class AddArtist(FormController):
         email = self.request.unauthenticated_userid
         party = WebUser.current_party(self.request)
 
+        log.debug(
+            (
+                "self.appstruct: %s\n"
+            ) % (
+                self.appstruct
+            )
+        )
+
         _artist = {
             'party': party,
-            'group': False,
-            'name': self.appstruct['artist']['name'],
-            'description': self.appstruct['artist']['description'] or ''
+            'name': self.appstruct['metadata']['name'],
+            'description': self.appstruct['metadata']['description'] or ''
         }
-        if self.appstruct['artist']['picture']:
-            picture_data = self.appstruct['artist']['picture']['fp'].read()
-            mimetype = self.appstruct['artist']['picture']['mimetype']
+        if self.appstruct['metadata']['picture']:
+            picture_data = self.appstruct['metadata']['picture']['fp'].read()
+            mimetype = self.appstruct['metadata']['picture']['mimetype']
             _artist['picture_data'] = picture_data
             _artist['picture_data_mime_type'] = mimetype
+
+        # _artist['access_parties'] = []
+        # for access_party in self.appstruct['access']['access']:
+        #     _artist['access_parties'].append(
+        #         'party.party,%s' % (access_party)
+        #     )
 
         artists = Artist.create([_artist])
 
@@ -77,13 +90,13 @@ class AddArtist(FormController):
             return
         artist = artists[0]
 
-        if self.appstruct['bank_account']['type']:
+        if self.appstruct['account']['type']:
             _bank_account_number = {
-                'bic': self.appstruct['bank_account']['bic'],
-                'type': self.appstruct['bank_account']['type'],
+                'bic': self.appstruct['account']['bic'],
+                'type': self.appstruct['account']['type'],
             }
-            if self.appstruct['bank_account']['type'] == 'iban':
-                number = self.appstruct['bank_account']['number']
+            if self.appstruct['account']['type'] == 'iban':
+                number = self.appstruct['account']['number']
                 _bank_account_number['number'] = number
             bank_account_number = BankAccountNumber.create(
                 artist.party, [_bank_account_number]
@@ -142,6 +155,16 @@ type_options = (
 
 # --- Fields ------------------------------------------------------------------
 
+@colander.deferred
+def web_user_select_widget(node, kw):
+    web_users = WebUser.search_all()
+    web_user_options = [
+        (web_user.id, web_user.party.name) for web_user in web_users
+    ]
+    widget = deform.widget.Select2Widget(values=web_user_options)
+    return widget
+
+
 class NameField(colander.SchemaNode):
     oid = "name"
     schema_type = colander.String
@@ -158,6 +181,13 @@ class PictureField(colander.SchemaNode):
     oid = "picture"
     schema_type = deform.FileData
     widget = deferred_file_upload_widget
+    missing = ""
+
+
+class WebUserField(colander.SchemaNode):
+    oid = "webuser"
+    schema_type = colander.String
+    widget = web_user_select_widget
     missing = ""
 
 
@@ -195,12 +225,17 @@ class MetadataSchema(colander.Schema):
     )
 
 
-class MembersSchema(colander.Schema):
-    pass
+class AccessSequence(colander.SequenceSchema):
+    webuser = WebUserField(
+        title=""
+    )
+    missing = ""
 
 
 class AccessSchema(colander.Schema):
-    pass
+    access = AccessSequence(
+        title=_(u"Access")
+    )
 
 
 class AccountSchema(colander.Schema):
@@ -220,16 +255,13 @@ class AccountSchema(colander.Schema):
 
 
 class AddArtistSchema(colander.Schema):
-    title = _(u"Add Artist")
+    title = _(u"Add Solo Artist")
     metadata = MetadataSchema(
         title=_(u"Metadata")
     )
-    members = MembersSchema(
-        title=_(u"Members")
-    )
-    access = AccessSchema(
-        title=_(u"Access")
-    )
+    # access = AccessSchema(
+    #     title=_(u"Access")
+    # )
     account = AccountSchema(
         title=_(u"Account")
     )

@@ -19,7 +19,10 @@ from ..models import (
 )
 from ..services import _
 from ..resources import ArtistResource
-from .forms import AddArtist
+from .forms import (
+    AddArtistSolo,
+    AddArtistGroup
+)
 
 log = logging.getLogger(__name__)
 
@@ -61,10 +64,19 @@ class ArtistViews(ViewBase):
         }
 
     @view_config(
-        name='add',
-        renderer='../templates/artist/add.pt')
-    def add(self):
-        self.register_form(AddArtist)
+        name='add_solo',
+        renderer='../templates/artist/add_solo.pt',
+        decorator=Tdb.transaction(readonly=False))
+    def add_solo(self):
+        self.register_form(AddArtistSolo)
+        return self.process_forms()
+
+    @view_config(
+        name='add_group',
+        renderer='../templates/artist/add_group.pt',
+        decorator=Tdb.transaction(readonly=False))
+    def add_group(self):
+        self.register_form(AddArtistGroup)
         return self.process_forms()
 
     @view_config(

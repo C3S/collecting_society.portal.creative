@@ -28,7 +28,7 @@ class Content(Tdb):
             list (obj[content]): List of content.
             None: if no match is found.
         """
-        return cls.get().search([])
+        return cls.get().search([('active', '=', True)])
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -45,7 +45,10 @@ class Content(Tdb):
         """
         if uid is None:
             return None
-        result = cls.get().search([('id', '=', uid)])
+        result = cls.get().search([
+            ('active', '=', True),
+            ('id', '=', uid)
+        ])
         return result[0] if result else None
 
     @classmethod
@@ -58,13 +61,15 @@ class Content(Tdb):
             name (str): Name of the content.
 
         Returns:
-            obj (content): Content.
-            None: If no match is found.
+            list (content): List of content.
         """
         if name is None:
             return None
-        result = cls.get().search([('name', '=', name)])
-        return result[0] if result else None
+        result = cls.get().search([
+            ('active', '=', True),
+            ('name', '=', name)
+        ])
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -81,7 +86,10 @@ class Content(Tdb):
         """
         if uuid is None:
             return None
-        result = cls.get().search([('uuid', '=', uuid)])
+        result = cls.get().search([
+            ('active', '=', True),
+            ('uuid', '=', uuid)
+        ])
         return result[0] if result else None
 
     @classmethod
@@ -91,16 +99,18 @@ class Content(Tdb):
         Searches a content by archive.
 
         Args:
-            archive (str): Name of the archive device.
+            archive (int): Id of the archive.
 
         Returns:
-            obj (content): Content.
-            None: If no match is found.
+            list (content): List of content.
         """
         if archive is None:
             return None
-        result = cls.get().search([('archive', '=', archive)])
-        return result[0] if result else None
+        result = cls.get().search([
+            ('active', '=', True),
+            ('archive', '=', archive)
+        ])
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -112,13 +122,15 @@ class Content(Tdb):
             user_id (int): Id of the user.
 
         Returns:
-            obj (content): Content.
-            None: If no match is found.
+            list (content): List of content.
         """
         if user_id is None:
             return None
-        result = cls.get().search([('user', '=', user_id)])
-        return result[0] if result else None
+        result = cls.get().search([
+            ('active', '=', True),
+            ('user', '=', user_id)
+        ])
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -130,16 +142,18 @@ class Content(Tdb):
             web_user_id (int): Id of the user.
 
         Returns:
-            obj (content): Content.
-            None: If no match is found.
+            list (content): List of content.
         """
         if web_user_id is None:
             return None
         web_user = WebUser.search_by_id(web_user_id)
         if web_user is None:
             return None
-        result = cls.get().search([('user', '=', web_user.user.id)])
-        return result[0] if result else None
+        result = cls.get().search([
+            ('active', '=', True),
+            ('user', '=', web_user.user.id)
+        ])
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -156,7 +170,10 @@ class Content(Tdb):
         """
         if creation_id is None:
             return None
-        result = cls.get().search([('creation', '=', creation_id)])
+        result = cls.get().search([
+            ('active', '=', True),
+            ('creation', '=', creation_id)
+        ])
         return result[0] if result else None
 
     @classmethod
@@ -169,13 +186,15 @@ class Content(Tdb):
             extension (str): Extension of the content.
 
         Returns:
-            obj (content): Content.
-            None: If no match is found.
+            list (content): List of content.
         """
         if extension is None:
             return None
-        result = cls.get().search([('extension', '=', extension)])
-        return result[0] if result else None
+        result = cls.get().search([
+            ('active', '=', True),
+            ('extension', '=', extension)
+        ])
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -187,13 +206,15 @@ class Content(Tdb):
             mime_type (str): Mime type of the content.
 
         Returns:
-            obj (content): Content.
-            None: If no match is found.
+            list (content): List of content.
         """
         if mime_type is None:
             return None
-        result = cls.get().search([('mime_type', '=', mime_type)])
-        return result[0] if result else None
+        result = cls.get().search([
+            ('active', '=', True),
+            ('mime_type', '=', mime_type)
+        ])
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)
@@ -214,6 +235,7 @@ class Content(Tdb):
             return None
         result = cls.get().search(
             [
+                ('active', '=', True),
                 ('user', '=', user_id),
                 ('category', '=', category),
                 ('creation', '=', None),
@@ -249,19 +271,29 @@ class Content(Tdb):
             vlist (list): List of dictionaries with attributes of a content.
                 [
                     {
+                        'active': bool,
+                        'uuid': str (required),
                         'name': str (required),
-                        'category': str (required),
-                        'creation': int,
-                        'user': int,
-                        'mime_type': str,
-                        'length': float,
-                        'channels': int,
-                        'sample_rate': int,
-                        'sample_width': int,
                         'size': int,
                         'path': str,
                         'preview_path': str,
-                        'archive': str
+                        'mime_type': str,
+                        'mediation': bool,
+                        'duplicate_of': int,
+                        'duplicates': list,
+                        'user': int,
+                        'fingerprintlogs': list,
+                        'checksums': list,
+                        'archive': int,
+                        'category': str (required),
+                        'creation': int,
+                        'processing_state': str,
+                        'processing_hostname': str,
+                        'rejection_reason': str,
+                        'length': float,
+                        'channels': int,
+                        'sample_rate': int,
+                        'sample_width': int
                     },
                     {
                         ...

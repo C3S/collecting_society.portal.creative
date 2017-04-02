@@ -53,16 +53,34 @@ class AddArtistGroup(FormController):
         email = self.request.unauthenticated_userid
         party = WebUser.current_party(self.request)
 
+        log.debug(
+            (
+                "self.appstruct: %s\n"
+            ) % (
+                self.appstruct
+            )
+        )
+
         _artist = {
             'party': party,
-            'name': self.appstruct['artist']['name'],
-            'description': self.appstruct['artist']['description'] or ''
+            'name': self.appstruct['metadata']['name'],
+            'description': self.appstruct['metadata']['description'] or ''
         }
-        if self.appstruct['artist']['picture']:
-            picture_data = self.appstruct['artist']['picture']['fp'].read()
-            mimetype = self.appstruct['artist']['picture']['mimetype']
+        if self.appstruct['metadata']['picture']:
+            picture_data = self.appstruct['metadata']['picture']['fp'].read()
+            mimetype = self.appstruct['metadata']['picture']['mimetype']
             _artist['picture_data'] = picture_data
             _artist['picture_data_mime_type'] = mimetype
+
+        _artist['solo_artists'] = [(
+            'add', self.appstruct['members']['members']
+        )]
+
+        # _artist['access_parties'] = []
+        # for access_party in self.appstruct['access']['access']:
+        #     _artist['access_parties'].append(
+        #         'party.party,%s' % (access_party)
+        #     )
 
         artists = Artist.create([_artist])
 
@@ -76,13 +94,13 @@ class AddArtistGroup(FormController):
             return
         artist = artists[0]
 
-        if self.appstruct['bank_account']['type']:
+        if self.appstruct['account']['type']:
             _bank_account_number = {
-                'bic': self.appstruct['bank_account']['bic'],
-                'type': self.appstruct['bank_account']['type'],
+                'bic': self.appstruct['account']['bic'],
+                'type': self.appstruct['account']['type'],
             }
-            if self.appstruct['bank_account']['type'] == 'iban':
-                number = self.appstruct['bank_account']['number']
+            if self.appstruct['account']['type'] == 'iban':
+                number = self.appstruct['account']['number']
                 _bank_account_number['number'] = number
             bank_account_number = BankAccountNumber.create(
                 artist.party, [_bank_account_number]
@@ -209,7 +227,6 @@ class MembersField(colander.SchemaNode):
     oid = "members"
     schema_type = colander.String
     widget = solo_artists_select_widget
-    missing = ""
 
 
 # --- Schemas -----------------------------------------------------------------

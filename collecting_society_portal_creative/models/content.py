@@ -139,7 +139,7 @@ class Content(Tdb):
         if web_user is None:
             return None
         result = cls.get().search([('user', '=', web_user.user.id)])
-        return result[0] if result else None
+        return result
 
     @classmethod
     @Tdb.transaction(readonly=True)

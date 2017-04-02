@@ -3,11 +3,7 @@
 
 import colander
 import deform
-from pkg_resources import resource_filename
 import logging
-
-from pyramid.threadlocal import get_current_request
-from pyramid.i18n import get_localizer
 
 from collecting_society_portal.models import (
     Tdb,
@@ -21,8 +17,7 @@ from ...services import _
 from ...models import (
     Artist,
     Creation,
-    License,
-    Content
+    License
 )
 from ...resources import CreationResource
 
@@ -40,14 +35,105 @@ class AddCreation(FormController):
 
     def controller(self):
 
-        self.form = add_creation_form(self.request)
+        # upload of creation file
+        if self.stage == 'upload_audiofile':
+            self.upload_audiofile()
 
-        if self.submitted() and self.validate():
-            self.save_creation()
+        # add metadata to creation
+        if self.stage == 'add_metadata':
+            self.add_metadata()
+
+        # add contributions to creation
+        if self.stage == 'add_contributions':
+            self.add_contributions()
+
+        # add licenses to creation
+        if self.stage == 'add_licenses':
+            self.add_licenses()
+
+        # add relations to other creations to creation
+        if self.stage == 'add_creation_relations':
+            self.add_creation_relations()
+
+        log.debug(
+            (
+                "self.stage: %s\n"
+                "self.appstruct: %s\n"
+                "self.data: %s\n"
+            ) % (
+                self.stage,
+                self.appstruct,
+                self.data
+            )
+        )
 
         return self.response
 
     # --- Stages --------------------------------------------------------------
+
+    def upload_audiofile(self):
+        self.form = upload_audiofile_form(self.request)
+        self.render(self.data)
+
+        if self.submitted('add_metadata') and self.validate():
+            self.data.update(self.appstruct.copy())
+            self.stage = 'add_metadata'
+            self.add_metadata()
+
+    def add_metadata(self):
+        self.form = add_metadata_form(self.request)
+        self.render(self.data)
+
+        if self.submitted('upload_audiofile'):
+            self.stage = 'upload_audiofile'
+            self.upload_audiofile()
+
+        if self.submitted('add_contributions') and self.validate():
+            self.data.update(self.appstruct.copy())
+            self.stage = 'add_contributions'
+            self.add_contributions()
+
+    def add_contributions(self):
+        self.form = add_contributions_form(self.request)
+        self.render(self.data)
+
+        if self.submitted('add_metadata'):
+            self.stage = 'add_metadata'
+            self.add_metadata()
+            self.render(self.data)
+
+        if self.submitted('add_licenses') and self.validate():
+            self.data.update(self.appstruct.copy())
+            self.stage = 'add_licenses'
+            self.add_licenses()
+
+    def add_licenses(self):
+        self.form = add_licenses_form(self.request)
+        self.render(self.data)
+
+        if self.submitted('add_contributions'):
+            self.stage = 'add_contributions'
+            self.add_contributions()
+            self.render(self.data)
+
+        if self.submitted('add_creation_relations') and self.validate():
+            self.data.update(self.appstruct.copy())
+            self.stage = 'add_creation_relations'
+            self.add_creation_relations()
+
+    def add_creation_relations(self):
+        self.form = add_creation_relations_form(self.request)
+        self.render(self.data)
+
+        if self.submitted('add_licenses'):
+            self.stage = 'add_licenses'
+            self.add_licenses()
+            self.render(self.data)
+
+        if self.submitted('save_creation') and self.validate():
+            self.data.update(self.appstruct.copy())
+            self.stage = 'save_creation'
+            self.save_creation()
 
     # --- Conditions ----------------------------------------------------------
 
@@ -57,21 +143,13 @@ class AddCreation(FormController):
     def save_creation(self):
         email = self.request.unauthenticated_userid
 
-        log.debug(
-            (
-                "self.appstruct: %s\n"
-            ) % (
-                self.appstruct
-            )
-        )
-
         _creation = {
-            'title': self.appstruct['metadata']['title'],
-            'artist': self.appstruct['metadata']['artist'],
+            'title': self.data['title'],
+            'artist': self.data['artist'],
         }
-        if self.appstruct['contributions']['contributions']:
+        if self.data['contributions']:
             _creation['contributions'] = []
-            for contribution in self.appstruct['contributions']['contributions']:
+            for contribution in self.data['contributions']:
                 _creation['contributions'].append(
                     (
                         'create',
@@ -81,9 +159,9 @@ class AddCreation(FormController):
                         }]
                     )
                 )
-        if self.appstruct['licenses']['licenses']:
+        if self.data['licenses']:
             _creation['licenses'] = []
-            for license_id in self.appstruct['licenses']['licenses']:
+            for license_id in self.data['licenses']:
                 _creation['licenses'].append(
                     (
                         'create',
@@ -92,9 +170,9 @@ class AddCreation(FormController):
                         }]
                     )
                 )
-        if self.appstruct['relations']['original_creations']:
+        if self.data['original_creations']:
             _creation['original_relations'] = []
-            for original_creation in self.appstruct['relations']['original_creations']:
+            for original_creation in self.data['original_creations']:
                 _creation['original_relations'].append(
                     (
                         'create',
@@ -104,9 +182,9 @@ class AddCreation(FormController):
                         }]
                     )
                 )
-        if self.appstruct['relations']['derivative_creations']:
+        if self.data['derivative_creations']:
             _creation['derivative_relations'] = []
-            for derivative_creation in self.appstruct['relations']['derivative_creations']:
+            for derivative_creation in self.data['derivative_creations']:
                 _creation['derivative_relations'].append(
                     (
                         'create',
@@ -119,8 +197,9 @@ class AddCreation(FormController):
                     )
                 )
 
-        if self.appstruct['content']['content']:
-            _creation['content'] = self.appstruct['content']['content']
+        for derivative_creation in self.data['derivative_creations']:
+            derivative_creation['creation']
+            derivative_creation['type']
 
         creations = Creation.create([_creation])
         if not creations:
@@ -133,15 +212,15 @@ class AddCreation(FormController):
             return
         creation = creations[0]
 
-        # Attachment = Tdb.get('ir.attachment')
-        # attachment = Attachment(
-        #     type='data',
-        #     name=self.appstruct['audiofile']['filename'],
-        #     resource=creation,
-        #     data=self.appstruct['audiofile']['fp'].read()
-        # )
-        # attachment.save()
-        # self.appstruct['audiofile']['fp'].delete()
+        Attachment = Tdb.get('ir.attachment')
+        attachment = Attachment(
+            type='data',
+            name=self.data['audiofile']['filename'],
+            resource=creation,
+            data=self.data['audiofile']['fp'].read()
+        )
+        attachment.save()
+        self.data['audiofile']['fp'].delete()
 
         log.info("creation add successful for %s: %s" % (email, creation))
         self.request.session.flash(
@@ -213,18 +292,6 @@ def licenses_select_widget(node, kw):
     return widget
 
 
-@colander.deferred
-def content_select_widget(node, kw):
-    request = kw.get('request')
-    web_user = WebUser.current_web_user(request)
-    contents = Content.search_orphans(web_user.id, 'Audio')
-    content_options = []
-    if contents:
-        content_options = [(content.id, content.name) for content in contents]
-    widget = deform.widget.Select2Widget(values=content_options)
-    return widget
-
-
 class AudiofileField(colander.SchemaNode):
     oid = "audiofile"
     schema_type = deform.FileData
@@ -246,13 +313,6 @@ class CurrentArtistField(colander.SchemaNode):
     oid = "artist"
     schema_type = colander.Integer
     widget = current_artists_select_widget
-
-
-class ContentField(colander.SchemaNode):
-    oid = "content"
-    schema_type = colander.String
-    widget = content_select_widget
-    missing = ""
 
 
 class ContributionTypeField(colander.SchemaNode):
@@ -443,86 +503,56 @@ class AddCreationRelationsSchema(colander.MappingSchema):
     )
 
 
-class MetadataSchema(colander.Schema):
-    title = _(u"Add metadata")
-    creation_title = TitleField(
-        name='title',
-        title=_(u"Title")
-    )
-    artist = CurrentArtistField(
-        title=_(u"Featured Artist")
-    )
-    collecting_society = CollectingSocietyField()
-
-
-class ContributionsSchema(colander.Schema):
-    contributions = ArtistRelationSequence(
-        title=_(u"Contributions")
-    )
-
-
-class LicensesSchema(colander.Schema):
-    licenses = LicensesField(
-        title=_(u"Licenses")
-    )
-
-
-class RelationsSchema(colander.Schema):
-    original_creations = CreationRelationSequence(
-        title=_(u"Original creations")
-    )
-    derivative_creations = CreationRelationSequence(
-        title=_(u"Derivative creations")
-    )
-
-
-class ContentSchema(colander.Schema):
-    content = ContentField(
-        title=_(u"Content")
-    )
-
-
-class AddCreationSchema(colander.Schema):
-    title = _(u"Add Solo Artist")
-    metadata = MetadataSchema(
-        title=_(u"Metadata")
-    )
-    # access = AccessSchema(
-    #     title=_(u"Access")
-    # )
-    contributions = ContributionsSchema(
-        title=_(u"Contributions")
-    )
-    licenses = LicensesSchema(
-        title=_(u"Licenses")
-    )
-    relations = RelationsSchema(
-        title=_(u"Relations")
-    )
-    content = ContentSchema(
-        title=_(u"Content")
-    )
-
-
 # --- Forms -------------------------------------------------------------------
 
-# custom template
-def translator(term):
-    return get_localizer(get_current_request()).translate(term)
-
-
-zpt_renderer_tabs = deform.ZPTRendererFactory([
-    resource_filename('collecting_society_portal', 'templates/deform/tabs'),
-    resource_filename('collecting_society_portal', 'templates/deform'),
-    resource_filename('deform', 'templates')
-], translator=translator)
-
-
-def add_creation_form(request):
+def upload_audiofile_form(request):
     return deform.Form(
-        renderer=zpt_renderer_tabs,
-        schema=AddCreationSchema().bind(request=request),
+        schema=UploadAudiofileSchema().bind(request=request),
         buttons=[
-            deform.Button('submit', _(u"Submit"))
+            deform.Button('add_metadata', _(u"Continue to metadata"))
+        ]
+    )
+
+
+def add_metadata_form(request):
+    return deform.Form(
+        schema=AddMetadataSchema().bind(request=request),
+        buttons=[
+            deform.Button(
+                'add_contributions', _(u"Continue to contributions")
+            ),
+            deform.Button('upload_audiofile', _(u"Back to audiofile"))
+        ]
+    )
+
+
+def add_contributions_form(request):
+    return deform.Form(
+        schema=AddContributionsSchema().bind(request=request),
+        buttons=[
+            deform.Button('add_licenses', _(u"Continue to licences")),
+            deform.Button('add_metadata', _(u"Back to metadata"))
+        ]
+    )
+
+
+def add_licenses_form(request):
+    return deform.Form(
+        schema=AddLicencesSchema().bind(request=request),
+        buttons=[
+            deform.Button(
+                'add_creation_relations', _(u"Continue to relations")
+            ),
+            deform.Button('add_contributions', _(u"Back to contributions"))
+        ]
+    )
+
+
+def add_creation_relations_form(request):
+    return deform.Form(
+        schema=AddCreationRelationsSchema().bind(request=request),
+        buttons=[
+            deform.Button('save_creation', _(u"Save creation")),
+            deform.Button('add_licenses', _(u"Back to licences"))
         ]
     )

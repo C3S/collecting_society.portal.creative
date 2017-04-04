@@ -14,7 +14,6 @@
 
                 <tr>
                     <td colspan="6">
-                        <h1 i18n:translate="">Creations</h1>
                         <div class="cs-symbolnavbar">
                             <a href="${request.resource_path(context, 'add')}">
                                 <span class="glyphicon glyphicon-plus"></span> <span i18n:translate="">Add</span>

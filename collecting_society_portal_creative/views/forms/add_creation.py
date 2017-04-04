@@ -217,7 +217,7 @@ def licenses_select_widget(node, kw):
 def content_select_widget(node, kw):
     request = kw.get('request')
     web_user = WebUser.current_web_user(request)
-    contents = Content.search_orphans(web_user.id, 'Audio')
+    contents = Content.search_orphans(web_user.id, 'audio')
     content_options = []
     if contents:
         content_options = [(content.id, content.name) for content in contents]
@@ -430,7 +430,7 @@ class CreationRelationSchema(colander.Schema):
 
 
 class CreationRelationSequence(colander.SequenceSchema):
-    contribution = CreationRelationSchema()
+    creation = CreationRelationSchema()
 
 
 class AddCreationRelationsSchema(colander.MappingSchema):

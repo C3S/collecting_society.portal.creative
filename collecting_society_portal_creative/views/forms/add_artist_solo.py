@@ -72,6 +72,8 @@ class AddArtistSolo(FormController):
             _artist['picture_data'] = picture_data
             _artist['picture_data_mime_type'] = mimetype
 
+        _artist['entity_creator'] = party
+
         # _artist['access_parties'] = []
         # for access_party in self.appstruct['access']['access']:
         #     _artist['access_parties'].append(
@@ -102,6 +104,7 @@ class AddArtistSolo(FormController):
                 artist.party, [_bank_account_number]
             )[0]
             artist.bank_account_number = bank_account_number
+
             artist.save()
 
         log.info("artist add successful for %s: %s" % (email, artist))

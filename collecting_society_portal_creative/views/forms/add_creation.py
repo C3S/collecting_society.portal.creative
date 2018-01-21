@@ -196,7 +196,7 @@ def solo_artists_select_widget(node, kw):
 def creations_select_widget(node, kw):
     creations = Creation.search_all()
     creations_options = [
-        (creation.id, creation.title + ' (' + creation.artist.name + ')')
+        (creation.id, creation.default_title + ' (' + creation.artist.name + ')')
         for creation in creations
     ]
     widget = deform.widget.Select2Widget(values=creations_options)

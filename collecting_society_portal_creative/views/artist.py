@@ -53,10 +53,12 @@ class ArtistViews(ViewBase):
         renderer='../templates/artist/show.pt',
         decorator=Tdb.transaction(readonly=True))
     def show(self):
-        artist_id = self.request.subpath[-1]
-        _artist = Artist.search_by_id(artist_id)
-        _creations = Creation.search_by_artist(artist_id)
-        _contributions = Creation.search_by_contributions_of_artist(artist_id)
+        artist_code = self.request.subpath[-1]
+        _artist = Artist.search_by_code(artist_code)
+        if _artist is None:
+            return None
+        _creations = Creation.search_by_artist(_artist.id)
+        _contributions = Creation.search_by_contributions_of_artist(_artist.id)
         return {
             'artist': _artist,
             'creations': _creations,
@@ -83,17 +85,18 @@ class ArtistViews(ViewBase):
         name='delete',
         decorator=Tdb.transaction(readonly=False))
     def delete(self):
+        import rpdb2; rpdb2.start_embedded_debugger("supersecret", fAllowRemote = True)
         email = self.request.unauthenticated_userid
 
-        _id = self.request.subpath[0]
-        if _id is None:
+        _code = self.request.subpath[0]
+        if _code is None:
             self.request.session.flash(
-                _(u"Could not delete artist - id is missing"),
+                _(u"Could not delete artist - code is missing"),
                 'main-alert-warning'
             )
             return self.redirect(ArtistResource, 'list')
 
-        artist = Artist.search_by_id(_id)
+        artist = Artist.search_by_code(_code)
         if artist is None:
             self.request.session.flash(
                 _(u"Could not delete artist - artist not found"),
@@ -101,7 +104,7 @@ class ArtistViews(ViewBase):
             )
             return self.redirect(ArtistResource, 'list')
 
-        _name, _code = artist.name, artist.code
+        _name = artist.name
         Artist.delete([artist])
         log.info("artist delete successful for %s: %s (%s)" % (
             email, _name, _code

@@ -123,6 +123,27 @@ class Artist(Tdb):
         return result[0] or None
 
     @classmethod
+    @Tdb.transaction(readonly=True)
+    def search_by_code(cls, artist_code, active=True):
+        """
+        Searches an artist by artist code
+
+        Args:
+          artist_id (int): artist.code
+
+        Returns:
+          obj: artist
+          None: if no match is found
+        """
+        result = cls.get().search([
+            ('code', '=', artist_code),
+            ('active', 'in', (True, active))
+        ])
+        if not result:
+            return None
+        return result[0]
+
+    @classmethod
     @Tdb.transaction(readonly=False)
     def delete(cls, artist):
         """

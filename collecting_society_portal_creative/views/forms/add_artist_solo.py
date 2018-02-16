@@ -60,14 +60,14 @@ class AddArtistSolo(FormController):
                 self.appstruct
             )
         )
-
         _artist = {
             'party': party,
             'name': self.appstruct['metadata']['name'],
             'description': self.appstruct['metadata']['description'] or ''
         }
         if self.appstruct['metadata']['picture']:
-            picture_data = self.appstruct['metadata']['picture']['fp'].read()
+            with open(self.appstruct['metadata']['picture']['fp'].name, mode='rb') as picfile:
+                picture_data = picfile.read()
             mimetype = self.appstruct['metadata']['picture']['mimetype']
             _artist['picture_data'] = picture_data
             _artist['picture_data_mime_type'] = mimetype

@@ -87,7 +87,7 @@
                     <td>${len(contributions)}</td>
                 </tr>
 
-                <!--?<!--?
+                <!--?
                 <tr tal:condition="artist.payee">
                     <th>Payee</th>
                     <td>${artist.payee.name if artist.valid_payee else ''}</td>

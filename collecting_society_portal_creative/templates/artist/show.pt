@@ -87,20 +87,6 @@
                     <td>${len(contributions)}</td>
                 </tr>
 
-                <!--?
-                <tr tal:condition="artist.payee">
-                    <th>Payee</th>
-                    <td>${artist.payee.name if artist.valid_payee else ''}</td>
-                </tr>
-                -->
-
-                <!--?
-                <tr tal:condition="artist.bank_account_number">
-                    <th i18n:translate="">Bank Account Number</th>
-                    <td>${artist.bank_account_number.number}</td>
-                </tr>
-                -->
-
             </table>
         </div>
 

@@ -3,7 +3,6 @@
 
 import logging
 
-from pyramid.response import Response
 from pyramid.view import (
     view_config,
     view_defaults
@@ -36,7 +35,7 @@ class CreationViews(ViewBase):
         name='list',
         renderer='../templates/creation/list.pt',
         decorator=Tdb.transaction(readonly=True))
-    def list_creations(self):
+    def list(self):
         web_user = WebUser.current_web_user(self.request)
         _creations = sorted(
             Creation.search_by_party(web_user.party.id),
@@ -48,7 +47,7 @@ class CreationViews(ViewBase):
         name='show',
         renderer='../templates/creation/show.pt',
         decorator=Tdb.transaction(readonly=True))
-    def show_creation(self):
+    def show(self):
         artist_id = self.request.subpath[-1]
         _creation = Creation.search_by_id(artist_id)
         _contributions = sorted(
@@ -64,14 +63,14 @@ class CreationViews(ViewBase):
         name='add',
         renderer='../templates/creation/add.pt',
         decorator=Tdb.transaction(readonly=False))
-    def add_creation(self):
+    def add(self):
         self.register_form(AddCreation)
         return self.process_forms()
 
     @view_config(
         name='delete',
         decorator=Tdb.transaction(readonly=False))
-    def delete_creation(self):
+    def delete(self):
         email = self.request.unauthenticated_userid
 
         _id = self.request.subpath[0]

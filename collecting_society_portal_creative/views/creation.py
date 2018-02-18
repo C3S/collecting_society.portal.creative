@@ -104,22 +104,3 @@ class CreationViews(ViewBase):
             'main-alert-success'
         )
         return self.redirect(CreationResource, 'list')
-
-    @view_config(
-        name='download',
-        decorator=Tdb.transaction(readonly=True))
-    def download_creation(self):
-        # response = Response(content_type='application/pdf')
-
-        Attachment = Tdb.get('ir.attachment')
-        creation_id = self.request.subpath[-1]
-        _attachements = Attachment.search([
-            ('resource', '=', '%s,%s' % ('creation', creation_id)),
-        ])
-        _attachement = _attachements[0]
-
-        return Response(
-            content_type='application/octet-stream',
-            content_disposition='attachment; filename=' + _attachement.name,
-            app_iter=_attachement.data
-        )

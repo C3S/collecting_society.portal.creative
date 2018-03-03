@@ -114,21 +114,21 @@ class Content(Tdb):
 
     @classmethod
     @Tdb.transaction(readonly=True)
-    def search_by_party(cls, party_id):
+    def search_by_user(cls, user_id):
         """
-        Searches a content by party id.
+        Searches a content by user id.
 
         Args:
-            party_id (int): Id of the party.
+            user_id (int): Id of the user.
 
         Returns:
             list (content): List of content.
         """
-        if party_id is None:
+        if user_id is None:
             return None
         result = cls.get().search([
             ('active', '=', True),
-            ('entity_creator', '=', party_id)
+            ('user', '=', user_id)
         ])
         return result
 
@@ -151,7 +151,7 @@ class Content(Tdb):
             return None
         result = cls.get().search([
             ('active', '=', True),
-            ('entity_creator', '=', web_user.party.id)
+            ('user', '=', web_user.user.id)
         ])
         return result
 
@@ -218,25 +218,25 @@ class Content(Tdb):
 
     @classmethod
     @Tdb.transaction(readonly=True)
-    def search_orphans(cls, party_id, category):
+    def search_orphans(cls, user_id, category):
         """
         Searches orphan content in category of web user.
 
         Args:
             request (pyramid.request.Request): Current request.
-            party_id (int): Res user id.
+            user_id (int): Res user id.
             category (str): Category of content.
 
         Returns:
             list (content): List of content.
             None: If no match is found.
         """
-        if party_id is None:
+        if user_id is None:
             return None
         result = cls.get().search(
             [
                 ('active', '=', True),
-                ('entity_creator', '=', party_id),
+                ('user', '=', user_id),
                 ('category', '=', category),
                 ('creation', '=', None),
                 ('processing_state', '!=', 'rejected')
@@ -258,8 +258,30 @@ class Content(Tdb):
             list (content): List of content.
             None: If no match is found.
         """
-        party = WebUser.current_web_user(request).party
-        return cls.search_orphans(party.id, category)
+        user = WebUser.current_web_user(request).user
+        return cls.search_orphans(user.id, category)
+
+    @classmethod
+    @Tdb.transaction(readonly=True)
+    def search_duplicates_by_user(cls, user_id):
+        """
+        Searches duplicate content of current user.
+
+        Args:
+            request (pyramid.request.Request): Current request.
+        Returns:
+           list (content): List of content.
+           None: If no match is found.
+        """
+        result = cls.get().search(
+            [
+                ('active', '=', True),
+                ('user', '=', user_id),
+                #('duplicate_of', '=', None)
+            ]
+        )
+        return result or None
+
 
     @classmethod
     @Tdb.transaction(readonly=False)
@@ -281,9 +303,7 @@ class Content(Tdb):
                         'mediation': bool,
                         'duplicate_of': int,
                         'duplicates': list,
-                        'entity_origin': str (required),
-                        'entity_creator': str (required),
-                        'user_committed_state': bool,
+                        'user': int,
                         'fingerprintlogs': list,
                         'checksums': list,
                         'archive': int,
@@ -316,10 +336,8 @@ class Content(Tdb):
                 raise KeyError('name is missing')
             if 'uuid' not in values:
                 raise KeyError('uuid is missing')
-            if 'entity_origin' not in values:
-                raise KeyError('entity_origin is missing')
-            if 'entity_creator' not in values:
-                raise KeyError('entity_creator is missing')
+            if 'user' not in values:
+                raise KeyError('user is missing')
             if 'category' not in values:
                 raise KeyError('category is missing')
         log.debug('create content:\n{}'.format(vlist))

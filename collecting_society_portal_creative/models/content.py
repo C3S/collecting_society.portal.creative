@@ -246,6 +246,27 @@ class Content(Tdb):
 
     @classmethod
     @Tdb.transaction(readonly=True)
+    def search_duplicates_by_user(cls, user_id):
+        """
+        Searches duplicate content of current user.
+
+        Args:
+            request (pyramid.request.Request): Current request.
+        Returns:
+           list (content): List of content.
+           None: If no match is found.
+        """
+        result = cls.get().search(
+            [
+                ('active', '=', True),
+                ('user', '=', user_id),
+                #('duplicate_of', '=', None)
+            ]
+        )
+        return result or None
+
+    @classmethod
+    @Tdb.transaction(readonly=True)
     def current_orphans(cls, request, category):
         """
         Searches orphan content in category of current web user.
